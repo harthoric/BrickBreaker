@@ -29,10 +29,22 @@ public class BrickLoader {
 			brickGroup.setManaged(false);
 		}
 
+		private Random random;
+
+		private int[][] randomGrid() {
+			int[][] grid = new int[ROWS][COLS];
+			for (int i = 0; i < ROWS; i++)
+				for (int j = 0; j < COLS; j++)
+					grid[i][j] = random.nextInt(Board.colours.length-1) + 1;
+
+			return grid;
+		}
+
 		private void loadBricks() {
+			int[][] GRID = ROWS != 5 || COLS != 10 ? randomGrid() : D_GRID;
 			for (int i = 0; i < COLS; i++)
 				for (int j = 0; j < ROWS; j++) {
-					Rectangle rect = new Rectangle(WIDTH, HEIGHT, Board.colours[D_GRID[j][i] - 1]);
+					Rectangle rect = new Rectangle(WIDTH, HEIGHT, Board.colours[GRID[j][i] - 1]);
 					rect.setTranslateX(i * WIDTH);
 					rect.setTranslateY(j * HEIGHT);
 					rect.setStroke(Color.BLACK);
