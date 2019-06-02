@@ -34,6 +34,24 @@ public class Board {
 		scene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
   }
 
+  private void handleBallHit() {
+		if (!(ball.getPosition().getX() > -WIDTH / 2 + (player.getLives() > 0 ? 20 : 0) && ball.getPosition().getX() < WIDTH / 2 - (player.getLives() > 0 ? 20 : 0))) {
+			ball.getVelocity().setX(-ball.getVelocity().getX());
+			ball.explode();
+		}
+		if (!(ball.getPosition().getY() > -HEIGHT / 2 && ball.getPosition().getY() < HEIGHT / 2)) {
+			ball.getVelocity().setY(-ball.getVelocity().getY());
+			ball.explode();
+		}
+	}
+
+  private boolean hitFloor() {
+		if (Math.round(ball.getPosition().getY()) >= HEIGHT / 2)
+			return true;
+
+		return false;
+	}
+
   private void setupBorders() {
 		lifeCounter = new Text(String.valueOf(player.getLives()) + " 💕");
 		leftBorder = new Rectangle(40, HEIGHT-30, Color.DARKGOLDENROD);
@@ -52,6 +70,13 @@ public class Board {
 		lifeCounter.setScaleY(2.5);
 		lifeCounter.setTranslateX(-WIDTH / 2 + 60);
 		lifeCounter.setTranslateY(-HEIGHT / 2 + 30);
+	}
+
+	private void setComponentFill(Color colour) {
+		player.player.setFill(colour);
+		lifeCounter.setFill(colour);
+		leftBorder.setFill(colour);
+		rightBorder.setFill(colour);
 	}
 
 }
