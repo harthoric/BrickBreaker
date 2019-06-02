@@ -14,7 +14,24 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) {
+    board = new Board();
+		keyHandler = new KeyHandler();
 
+		primaryStage.setResizable(false);
+		primaryStage.setTitle("BrickBreak!");
+		primaryStage.setOnCloseRequest(e -> System.exit(0));
+		primaryStage.setScene(board.getScene());
+		primaryStage.show();
+
+		AnimationTimer timer = new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+				keyHandler.checkKeys();
+				board.update();
+			}
+		};
+
+		timer.start();
   }
 
 }
