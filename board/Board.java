@@ -34,6 +34,46 @@ public class Board {
 		scene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
   }
 
+  public void addRootChild(Node ...node) {
+		root.getChildren().addAll(node);
+	}
+
+	public Scene getScene() {
+		return scene;
+	}
+
+	public Canvas getCanvas() {
+		return canvas;
+	}
+
+	public static Player getPlayer() {
+		return player;
+	}
+
+	public void update() {
+		ball.resetExplode();
+		ball.setPosition(new Vector2D(ball.getPosition().getX()+ball.getVelocity().getX(), ball.getPosition().getY()+ball.getVelocity().getY()));
+		ball.ball.setTranslateX(ball.getPosition().getX());
+		ball.ball.setTranslateY(ball.getPosition().getY());
+		handleBallHit();
+		if (root.getChildren().contains(player.player))
+			player.handleBallHit(ball);
+		if (brickLoader.getBrickGroup().getChildren().size() > 0)
+			brickLoader.ballHit(ball);
+		if (hitFloor()) {
+			if (player.getLives() > 0) {
+				setComponentFill(colours[player.getLives()]);
+				player.decrementLives();
+			}
+			if (player.getLives() == 0) {
+				lifeCounter.setFill(Color.BLACK);
+				root.getChildren().removeAll(player.player, leftBorder, rightBorder);
+			}
+
+			lifeCounter.setText(String.valueOf(player.getLives()) + " 💕");
+		}
+	}
+
   private void handleBallHit() {
 		if (!(ball.getPosition().getX() > -WIDTH / 2 + (player.getLives() > 0 ? 20 : 0) && ball.getPosition().getX() < WIDTH / 2 - (player.getLives() > 0 ? 20 : 0))) {
 			ball.getVelocity().setX(-ball.getVelocity().getX());
