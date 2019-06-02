@@ -34,4 +34,24 @@ public class Board {
 		scene.setOnKeyReleased(event -> keys.put(event.getCode(), false));
   }
 
+  private void setupBorders() {
+		lifeCounter = new Text(String.valueOf(player.getLives()) + " 💕");
+		leftBorder = new Rectangle(40, HEIGHT-30, Color.DARKGOLDENROD);
+		leftBorder.setTranslateX(-WIDTH/2);
+		leftBorder.setStroke(Color.WHITE);
+		rightBorder = new Rectangle(40, HEIGHT-30, Color.DARKGOLDENROD);
+		rightBorder.setTranslateX(WIDTH/2);
+		rightBorder.setStroke(Color.WHITE);
+	}
+
+	private void setupScore() {
+		lifeCounter.setStroke(Color.WHITE);
+		lifeCounter.setStrokeWidth(1);
+		lifeCounter.setFill(colours[player.getLives()]);
+		lifeCounter.setScaleX(2.5);
+		lifeCounter.setScaleY(2.5);
+		lifeCounter.setTranslateX(-WIDTH / 2 + 60);
+		lifeCounter.setTranslateY(-HEIGHT / 2 + 30);
+	}
+
 }
