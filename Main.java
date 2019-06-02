@@ -15,7 +15,7 @@ public class Main extends Application {
 		keyHandler = new KeyHandler();
 
 		primaryStage.setResizable(false);
-		primaryStage.setTitle("BrickBreak!");
+		primaryStage.setTitle("BrickBreaker!");
 		primaryStage.setOnCloseRequest(e -> System.exit(0));
 		primaryStage.setScene(board.getScene());
 		primaryStage.show();
